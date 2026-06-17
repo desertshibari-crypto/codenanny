@@ -1,5 +1,8 @@
 import { Router, json } from 'express';
 
+// Set of active SSE response objects; used for cleanup on server close.
+const _sseClients = new Set();
+
 export function createRouter({ api, db, events, logger = console }) {
   const r = Router();
   r.use(json());
@@ -101,5 +104,54 @@ export function createRouter({ api, db, events, logger = console }) {
 
   r.get('/api/stats', (req, res) => res.json(api.stats()));
 
+  // ------------------------------------------------------------------ SSE ---
+  r.get('/api/events', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no');
+    res.flushHeaders?.();
+
+    // Helper: write one SSE message block
+    function send(eventName, data) {
+      const payload = typeof data === 'string' ? data : JSON.stringify(data);
+      res.write(`event: ${eventName}\ndata: ${payload}\n\n`);
+    }
+
+    // Welcome event on connect
+    send('welcome', { type: 'welcome', stats: api.stats(), ts: Date.now() });
+
+    // Forward internal bus events to this client
+    function onSessionUpdated(payload) { send('session:updated', payload); }
+    function onProjectCreated(payload) { send('project:created', payload); }
+    function onReady(payload)          { send('ready', payload); }
+
+    events.on('codenanny:session:updated', onSessionUpdated);
+    events.on('codenanny:project:created', onProjectCreated);
+    events.on('codenanny:ready', onReady);
+
+    // 30-second keepalive ping to defeat proxy idle timeouts
+    const keepalive = setInterval(() => res.write(':keepalive\n\n'), 30_000);
+
+    _sseClients.add(res);
+
+    function cleanup() {
+      clearInterval(keepalive);
+      events.off('codenanny:session:updated', onSessionUpdated);
+      events.off('codenanny:project:created', onProjectCreated);
+      events.off('codenanny:ready', onReady);
+      _sseClients.delete(res);
+      res.end();
+    }
+
+    req.on('close', cleanup);
+  });
+
   return r;
+}
+
+/** Close all open SSE connections (call on server shutdown). */
+export function closeSseClients() {
+  for (const res of _sseClients) res.end();
+  _sseClients.clear();
 }

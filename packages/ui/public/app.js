@@ -3,6 +3,98 @@ const BASE = '/codenanny/api';
 let currentView = 'sessions';
 let cachedProjects = [];
 
+// ---------------------------------------------------------------- SSE client --
+
+let _sseSource = null;
+let _sseBackoff = 1000;   // start at 1 s
+const SSE_BACKOFF_MAX = 30_000;
+let _newSessionCount = 0; // count of sessions received since last list refresh
+
+function ssePillState(state) {
+  const pill = document.getElementById('sse-pill');
+  if (!pill) return;
+  pill.classList.toggle('sse-live', state === 'live');
+  pill.classList.toggle('sse-connecting', state !== 'live');
+}
+
+function showNewSessionsPill(n) {
+  const el = document.getElementById('new-sessions-pill');
+  if (!el) return;
+  if (n <= 0) { el.classList.add('hidden'); return; }
+  el.textContent = `${n} new session${n === 1 ? '' : 's'} — click to refresh`;
+  el.classList.remove('hidden');
+  el.onclick = () => {
+    _newSessionCount = 0;
+    el.classList.add('hidden');
+    loadStats();
+    if (currentView === 'sessions') loadSessions();
+  };
+}
+
+function connectSSE() {
+  if (_sseSource) { _sseSource.close(); _sseSource = null; }
+
+  ssePillState('connecting');
+  const es = new EventSource(`${BASE}/events`);
+  _sseSource = es;
+
+  es.addEventListener('welcome', () => {
+    _sseBackoff = 1000; // reset backoff on successful connect
+    ssePillState('live');
+  });
+
+  es.addEventListener('session:updated', (e) => {
+    // Re-fetch just the affected row so the sidebar title is up-to-date
+    let data = {};
+    try { data = JSON.parse(e.data); } catch { /* ignore */ }
+    if (data.id && currentView === 'sessions') {
+      // Re-render affected list item without full reload
+      refreshSessionRow(data.id);
+    }
+  });
+
+  es.addEventListener('ready', () => {
+    // watch mode just re-ingested — count new sessions available
+    _newSessionCount += 1;
+    showNewSessionsPill(_newSessionCount);
+    loadStats();
+  });
+
+  es.addEventListener('project:created', () => {
+    refreshProjectsCache();
+  });
+
+  es.onerror = () => {
+    ssePillState('connecting');
+    es.close();
+    _sseSource = null;
+    // Exponential backoff: 1s → 2s → 4s → 8s → 30s cap
+    const delay = _sseBackoff;
+    _sseBackoff = Math.min(_sseBackoff * 2, SSE_BACKOFF_MAX);
+    setTimeout(connectSSE, delay);
+  };
+}
+
+async function refreshSessionRow(sessionId) {
+  try {
+    const r = await fetch(`${BASE}/sessions/${encodeURIComponent(sessionId)}`);
+    if (!r.ok) return;
+    const { session: s } = await r.json();
+    // Find the existing list item by its onclick closure's captured id
+    const items = document.querySelectorAll('#list li');
+    for (const li of items) {
+      if (li.dataset.sessionId === sessionId) {
+        li.querySelector('.title').textContent = s.title;
+        li.querySelector('.meta').textContent =
+          `${s.project_id || 'no project'} · ${formatTs(s.ended_at)}`;
+        return;
+      }
+    }
+  } catch { /* ignore */ }
+}
+
+window.addEventListener('unload', () => { _sseSource?.close(); });
+
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
@@ -42,6 +134,7 @@ async function loadSessions() {
   ul.innerHTML = '';
   for (const s of sessions) {
     const li = document.createElement('li');
+    li.dataset.sessionId = s.id;
     li.innerHTML = `
       <div class="title">${esc(s.title)}</div>
       <div class="meta">${esc(s.project_id || 'no project')} · ${formatTs(s.ended_at)}</div>
@@ -267,3 +360,4 @@ loadSessions().catch((err) => {
   document.getElementById('list').innerHTML =
     `<li class="error">Error loading sessions: ${esc(err.message)}</li>`;
 });
+connectSSE();

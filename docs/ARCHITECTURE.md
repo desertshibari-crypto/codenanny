@@ -29,22 +29,32 @@ The HTML wizard is the entry point for both. Picks the branch on step 1.
 ```
 Browser
   │
-  ▼
-Express app  ◄── created by your host process
-  │
-  ├── /codenanny  ◄── plugkit-mounted codenanny router (HTTP API)
-  │     │
-  │     ▼
-  │   createApi(db) ───▶ better-sqlite3 ───▶ codenanny.db
-  │                          ▲
-  │                          │ ingestAll() walks ~/.claude/projects/
-  │                          │ on startup
-  │                          │
-  └── /app  ◄── static vanilla UI from @codenanny/ui
-        │
-        ▼
-      fetch() ───▶ /codenanny/api/sessions, /search, /media, /stats, ...
+  ├─(HTTP fetch)──────────────────────────────────────────────────────────────▶
+  │                                                                            │
+  │                                                           Express app  ◄── created by your host process
+  │                                                                 │
+  │                                                   ┌── /codenanny  ◄── plugkit-mounted codenanny router
+  │                                                   │       │
+  │                                                   │       ▼
+  │                                                   │   createApi(db) ───▶ better-sqlite3 ───▶ codenanny.db
+  │                                                   │                           ▲
+  │                                                   │                           │ ingestAll() walks
+  │                                                   │                           │ ~/.claude/projects/ on startup
+  │                                                   │                           │
+  │                                                   └── /app  ◄── static vanilla UI from @codenanny/ui
+  │                                                         │
+  │  fetch() ◄── /codenanny/api/sessions, /search, /media  │
+  │                                                         │
+  ◄─(SSE EventSource, persistent)──────────────────────────┘
+         GET /codenanny/api/events
+         ← event: welcome
+         ← event: session:updated   (on PATCH or watch re-ingest)
+         ← event: ready             (after watch mode finishes a re-ingest)
+         ← event: project:created   (on POST /api/projects)
+         ← :keepalive (every 30 s)
 ```
+
+**Why SSE and not WebSocket?** The UI only needs server-to-client push — there is no client-to-server traffic over this channel. SSE is a better fit because: (1) it is a plain HTTP/1.1 response, so it works through any reverse proxy that speaks HTTP without additional configuration; (2) the browser's native `EventSource` API handles reconnection with zero library code; (3) SSE operates over a single TCP connection with automatic HTTP/2 multiplexing, whereas WebSocket requires a protocol upgrade handshake that some proxies drop. The only trade-off — no bidirectional messages — is not relevant here since all mutations go through the existing REST endpoints.
 
 ## Request lifecycle (export mode)
 

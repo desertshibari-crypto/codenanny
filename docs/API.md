@@ -85,6 +85,55 @@ Returns: `Array<{ session_id, snippet, ts, role }>`.
 
 Returns: `{ sessions: n, files: n, prompts: n, projects: n }`.
 
+### Server-Sent Events
+
+#### `GET /api/events`
+
+Opens a persistent SSE stream. The server pushes events whenever watch mode re-ingests a transcript, a session is renamed, or a project is created. The browser's native `EventSource` API handles reconnection automatically; for reverse-proxy setups see the troubleshooting note in [docs/INSTALL.md](INSTALL.md).
+
+**Response headers:**
+
+| Header | Value |
+|---|---|
+| `Content-Type` | `text/event-stream` |
+| `Cache-Control` | `no-cache` |
+| `Connection` | `keep-alive` |
+| `X-Accel-Buffering` | `no` (prevents nginx from buffering the stream) |
+
+**Event types:**
+
+| `event:` name | `data:` payload | When |
+|---|---|---|
+| `welcome` | `{ type: "welcome", stats: { sessions, files, prompts, projects }, ts: <epoch-ms> }` | Immediately on connect |
+| `session:updated` | `{ id: "<session-id>", changes: { title?, project_id? } }` | After `PATCH /api/sessions/:id` or watch re-ingest of an existing transcript |
+| `project:created` | `{ id: "<project-id>" }` | After `POST /api/projects` |
+| `ready` | `{ stats: { sessions, files, prompts, projects } }` | After watch mode finishes re-ingesting a changed transcript |
+
+**Keepalive:** the server writes a `:keepalive` comment line every **30 seconds** to defeat proxy idle-timeout disconnects. These are not events and are silently ignored by `EventSource`.
+
+**Recommended client-side reconnect strategy:** `EventSource` reconnects automatically on network failure using browser-managed backoff. If you implement a custom client (e.g. with `fetch`), use exponential backoff: 1 s → 2 s → 4 s → 8 s → 30 s cap. Only call `EventSource.close()` on page unload to avoid lingering server-side connections.
+
+**curl example — raw event stream:**
+
+```bash
+curl -N http://localhost:7700/codenanny/api/events
+```
+
+Sample output immediately after connecting, then after a transcript re-ingest:
+
+```
+event: welcome
+data: {"type":"welcome","stats":{"sessions":42,"files":318,"prompts":201,"projects":7},"ts":1718573200000}
+
+:keepalive
+
+event: ready
+data: {"stats":{"sessions":43,"files":320,"prompts":203,"projects":7}}
+
+event: session:updated
+data: {"id":"abc123def456","changes":{"title":"new transcript title"}}
+```
+
 ### Root
 
 #### `GET /`
