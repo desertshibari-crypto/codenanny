@@ -20,9 +20,10 @@
     "ingest": "node packages/cli/bin/codenanny.js ingest",
     "serve": "node packages/cli/bin/codenanny.js serve",
     "export": "node packages/cli/bin/codenanny.js export",
-    "test": "echo \"TODO: tests\" && exit 0",
+    "test": "node --test tests/**/*.test.js",
     "lint": "echo \"TODO: lint\" && exit 0"
   },
+  "type": "module",
   "engines": {
     "node": ">=20"
   }
