@@ -42,7 +42,7 @@ That's the whole interface.
 Adapters should preserve the bundle as-is and produce two artifacts at the destination:
 
 - **`index.json`** — the bundle itself
-- **`index.html`** — the static viewer (codenanny provides `viewerHTML` for you; see below)
+- **`index.html`** — the static viewer (codenanny provides `renderViewer` for you; see below)
 
 This way, every export looks identical at the destination regardless of which transport carried it.
 
@@ -50,7 +50,7 @@ This way, every export looks identical at the destination regardless of which tr
 
 ```js
 // packages/adapters/src/delivery-myservice.js
-import { viewerHTML } from './_viewer.js';
+import { renderViewer } from './_viewer.js';
 
 export async function deliver(bundle, opts = {}) {
   const { path: targetPath, host, user, auth } = opts;
@@ -59,7 +59,7 @@ export async function deliver(bundle, opts = {}) {
     throw new Error('myservice: host, user, auth, path all required');
   }
 
-  const html = viewerHTML(bundle.generated_at);
+  const html = renderViewer(bundle);
   const json = JSON.stringify(bundle, null, 2);
 
   // ... your service's upload logic

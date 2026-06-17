@@ -58,7 +58,7 @@ See [docs/INSTALL.md](docs/INSTALL.md) for prerequisites and troubleshooting.
 - **Search** across prompts and content (sqlite FTS5, sub-100ms on tens of thousands of prompts)
 - **Browse** by session, by project, or "every file I've ever generated" (media view)
 - **Rename + reassign** sessions to projects from the UI
-- **Export** to local / SCP / Google Drive (FTP coming)
+- **Export** to local / SCP / Google Drive / FTP
 - **Static bundle** is self-contained: opens in any browser, fully offline-searchable
 - **HTTP API** for embedding codenanny data in your own tools
 - **Library API** for embedding codenanny *itself* in your own Node app
@@ -78,7 +78,7 @@ Good first issues are labeled `good first issue` once they exist.
 
 ## Status
 
-**v0.1.0** — early. Core ingest + UI + live mode + local/scp/gdrive adapters are working. FTP, auth, watch-mode-auto-ingest, and tests are on the v0.2 list. See [docs/ROADMAP.md](docs/ROADMAP.md).
+**v0.2.0** — FTP adapter, watch-mode auto-ingest, and a node:test smoke suite landed on top of v0.1. Auth / multi-user and one-click GDrive OAuth are on the v0.3 list. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Why
 
