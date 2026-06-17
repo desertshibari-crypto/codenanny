@@ -87,3 +87,4 @@ rm -f /wherever/codenanny.db /wherever/codenanny.config.json
 - **`better-sqlite3` fails to install** — install platform build tools (above) and re-run `npm install`.
 - **Ingest finds 0 sessions** — Claude Code stores transcripts at `~/.claude/projects/<project-slug>/<session-id>.jsonl`. If yours live elsewhere, point `--src` at that directory.
 - **Live mode UI is blank** — try a hard reload. The wizard mounts the UI at `/app` only after submit.
+- **Picker shows no folders** — confirm the OAuth scope was `drive.file` (default) OR `drive.readonly` (broader). The picker only sees folders codenanny has access to via the granted scope. If you previously authorized with a narrower scope, revoke access at https://myaccount.google.com/permissions and re-connect to get a fresh token with the correct scope.
