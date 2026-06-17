@@ -2,6 +2,7 @@ import { startServer } from './serve.js';
 import { runIngest } from './ingest-cmd.js';
 import { runExport } from './export-cmd.js';
 import { startWizard } from './wizard-cmd.js';
+import { runResume } from './resume-cmd.js';
 
 const HELP = `
 codenanny — turn AI-generated project sprawl into a searchable library.
@@ -14,6 +15,9 @@ Commands:
   serve           Run the live server (UI + API)
   ingest          One-shot ingest of Claude Code transcripts into the database
   export          Generate a self-contained static HTML+JSON bundle
+  resume [id]     Print a paste-ready resume bundle for a session
+                    (id defaults to the most recently active session;
+                     "latest" is also accepted)
   help            Show this help
 
 Options:
@@ -33,6 +37,9 @@ Examples:
   codenanny serve --port 7700
   codenanny ingest --src ~/.claude/projects
   codenanny export --dest ./codenanny-export
+  codenanny resume                    # most recent session
+  codenanny resume latest --copy      # copy to clipboard (OSC52)
+  codenanny resume <session-id> --turns 10
 `;
 
 export function parseArgs(argv) {
@@ -63,6 +70,7 @@ export async function run(argv) {
     case 'ingest': return runIngest(args);
     case 'export': return runExport(args);
     case 'wizard': return startWizard(args);
+    case 'resume': return runResume(args);
     case 'help':
     case '--help':
     case '-h':

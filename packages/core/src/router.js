@@ -1,4 +1,5 @@
 import { Router, json } from 'express';
+import { resumeBundle } from './resume.js';
 
 // Set of active SSE response objects; used for cleanup on server close.
 const _sseClients = new Set();
@@ -50,6 +51,18 @@ export function createRouter({ api, db, events, logger = console }) {
     if (!result.changes) return res.status(404).json({ error: 'session not found' });
     events.emit?.('codenanny:session:updated', { id: req.params.id, changes: req.body });
     res.json(api.sessions.get(req.params.id));
+  });
+
+  r.get('/api/sessions/:id/resume', (req, res) => {
+    const turns = Math.max(1, Math.min(parseInt(req.query.turns) || 6, 50));
+    const maxTurnChars = Math.max(200, Math.min(parseInt(req.query.max_turn_chars) || 4000, 50_000));
+    const bundle = resumeBundle(api, req.params.id, { turns, maxTurnChars });
+    if (!bundle) return res.status(404).json({ error: 'session not found' });
+    if ((req.query.format || '').toLowerCase() === 'text') {
+      res.type('text/markdown; charset=utf-8').send(bundle.formatted);
+      return;
+    }
+    res.json(bundle);
   });
 
   r.get('/api/projects', (req, res) => {
