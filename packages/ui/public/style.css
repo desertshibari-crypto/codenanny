@@ -10,7 +10,56 @@ body { display: flex; background: #0e1116; color: #e6e6e6; }
   padding: 16px;
   overflow-y: auto;
 }
-#sidebar h1 { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
+.sidebar-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.sidebar-title-row h1 { margin: 0; font-size: 18px; font-weight: 600; flex: 1; }
+
+/* LIVE status pill */
+.sse-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1.4;
+  border: 1px solid;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+  flex-shrink: 0;
+}
+.sse-pill.sse-live {
+  background: #0d2b1a;
+  border-color: #2ea043;
+  color: #3fb950;
+  animation: sse-pulse 2.5s ease-in-out infinite;
+}
+.sse-pill.sse-connecting {
+  background: #1c2128;
+  border-color: #6e7681;
+  color: #6e7681;
+}
+@keyframes sse-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+/* "N new sessions" pill shown after watch re-ingestion */
+.new-sessions-pill {
+  background: #1f3a5f;
+  border: 1px solid #1f6feb;
+  color: #79c0ff;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+.new-sessions-pill:hover { background: #1f4a7f; }
+.new-sessions-pill.hidden { display: none; }
 
 .sidebar-nav {
   display: flex;

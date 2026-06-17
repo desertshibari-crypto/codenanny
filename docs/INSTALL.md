@@ -87,3 +87,13 @@ rm -f /wherever/codenanny.db /wherever/codenanny.config.json
 - **`better-sqlite3` fails to install** — install platform build tools (above) and re-run `npm install`.
 - **Ingest finds 0 sessions** — Claude Code stores transcripts at `~/.claude/projects/<project-slug>/<session-id>.jsonl`. If yours live elsewhere, point `--src` at that directory.
 - **Live mode UI is blank** — try a hard reload. The wizard mounts the UI at `/app` only after submit.
+- **Events disconnected** — check that your reverse proxy (if any) preserves SSE: nginx needs `proxy_buffering off` and `proxy_read_timeout` ≥ 60s for the `/codenanny/api/events` location. Example nginx snippet:
+  ```nginx
+  location /codenanny/api/events {
+      proxy_pass         http://localhost:7700;
+      proxy_http_version 1.1;
+      proxy_buffering    off;
+      proxy_read_timeout 120s;
+      proxy_set_header   Connection '';
+  }
+  ```
