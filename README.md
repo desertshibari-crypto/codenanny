@@ -51,6 +51,7 @@ See [docs/INSTALL.md](docs/INSTALL.md) for prerequisites and troubleshooting.
 | [docs/ADAPTERS.md](docs/ADAPTERS.md) | Writing a delivery adapter for a new destination |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | v1.5 / v2 / v2.5 / v3 (non-binding) |
 | [SPEC.md](SPEC.md) | Full v1 spec |
+| [deploy/](deploy/) | Production deployment recipes (PM2 + autossh + nginx auth) |
 
 ## Features
 

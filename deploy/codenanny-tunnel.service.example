@@ -1,0 +1,52 @@
+; Reverse SSH tunnel: forwards remote 127.0.0.1:7700 on the public host
+; to local 127.0.0.1:7700 on this (private) box, so that an nginx
+; reverse-proxy on the public host can reach codenanny without
+; codenanny ever opening a public port.
+;
+; Install: /etc/systemd/system/codenanny-tunnel.service
+; Requires: autossh (apt-get install autossh)
+; Replace every {{PLACEHOLDER}} before enabling.
+
+[Unit]
+Description=Reverse SSH tunnel for codenanny ({{PUBLIC_HOST}} <- this box)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+; AUTOSSH_GATETIME=0 lets autossh restart immediately on transient connect
+; failures instead of giving up after the first failed attempt at boot.
+Environment=AUTOSSH_GATETIME=0
+Environment=AUTOSSH_POLL=60
+; -M 0 disables autossh's own monitoring port; we rely on ssh's own
+; ServerAliveInterval/ServerAliveCountMax for liveness, which is simpler
+; and doesn't require opening an extra port.
+ExecStart=/usr/bin/autossh -M 0 -N \
+  -o ServerAliveInterval=30 \
+  -o ServerAliveCountMax=3 \
+  -o ExitOnForwardFailure=yes \
+  -o StrictHostKeyChecking=accept-new \
+  -i {{SSH_KEY_PATH}} \
+  -p {{PUBLIC_HOST_SSH_PORT}} \
+  -R 127.0.0.1:7700:127.0.0.1:7700 \
+  {{PUBLIC_HOST_USER}}@{{PUBLIC_HOST}}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+; ── placeholder reference ──────────────────────────────────────────────
+; {{PUBLIC_HOST}}            hostname/IP of the box running nginx
+; {{PUBLIC_HOST_SSH_PORT}}   ssh port on that box (usually 22)
+; {{PUBLIC_HOST_USER}}       user on that box that owns the reverse forward
+; {{SSH_KEY_PATH}}           absolute path to the private key, e.g.
+;                            /root/.ssh/id_ed25519_codenanny
+;
+; The remote bind 127.0.0.1:7700 means the forwarded port is only
+; reachable from the public host itself (nginx, on that same box).
+; If you ever want the tunnel reachable from other hosts, change to
+; 0.0.0.0:7700 — and add GatewayPorts=yes to that host's sshd_config.
+; You almost certainly do not want that; the whole point of this setup
+; is that nginx + auth_request is the only public-facing surface.

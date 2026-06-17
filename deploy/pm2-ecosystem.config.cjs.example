@@ -1,0 +1,43 @@
+// PM2 ecosystem config for codenanny.
+//
+// Install:
+//   cp deploy/pm2-ecosystem.config.cjs.example /opt/codenanny/ecosystem.config.cjs
+//   $EDITOR /opt/codenanny/ecosystem.config.cjs   # adjust cwd, db, src
+//   pm2 start /opt/codenanny/ecosystem.config.cjs
+//   pm2 save                                       # freeze dump.pm2
+//   pm2 startup systemd -u root --hp /root         # then run printed cmd
+//
+// After any change to the running process list (start/stop/delete),
+// run `pm2 save` again, or the next reboot will resurrect the *old*
+// list without your changes.
+
+module.exports = {
+  apps: [
+    {
+      name: 'codenanny',
+      cwd: '/opt/codenanny',
+      script: 'packages/cli/bin/codenanny.js',
+      args: [
+        'serve',
+        '--port', '7700',
+        '--db',   '/var/lib/codenanny/codenanny.db',
+        '--src',  '/root/.claude/projects',
+      ],
+      // Bind to loopback only — the tunnel + nginx do the public-facing
+      // work. Codenanny should never accept connections from non-loopback
+      // interfaces directly.
+      env: {
+        NODE_ENV: 'production',
+        HOST:     '127.0.0.1',
+      },
+      autorestart: true,
+      max_restarts: 10,
+      restart_delay: 2000,
+      // Log paths; create the directory or PM2 will fall back to ~/.pm2/logs.
+      out_file:   '/var/log/codenanny/out.log',
+      error_file: '/var/log/codenanny/err.log',
+      merge_logs: true,
+      time:       true,
+    },
+  ],
+};

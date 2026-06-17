@@ -1,0 +1,63 @@
+# nginx location block: serves codenanny at /codenanny/ behind an
+# auth_request gate. Drop this *inside* an existing `server { ... }`
+# block (the one that already has your TLS cert + server_name) and
+# reload nginx.
+#
+# Requires:
+#   1. The autossh tunnel from codenanny-tunnel.service.example, so
+#      that 127.0.0.1:7700 on this host reaches your private codenanny.
+#   2. An auth endpoint that returns 200 for authenticated sessions
+#      and 401/403 otherwise. If your dashboard already has a login
+#      system, this is usually a tiny "check session cookie, return
+#      no body" handler — see the example below.
+
+# ── auth check (internal — not directly reachable) ────────────────────
+# Adjust the upstream URL to point at your auth backend's "is this
+# session valid?" endpoint. The handler MUST:
+#   - return 200 if authenticated
+#   - return 401 or 403 if not
+#   - return an empty body (nginx discards it anyway)
+location = /auth/_codenanny_check {
+    internal;
+    proxy_pass              http://127.0.0.1:{{AUTH_BACKEND_PORT}}/auth/check;
+    proxy_pass_request_body off;
+    proxy_set_header        Content-Length "";
+    proxy_set_header        X-Original-URI $request_uri;
+    proxy_set_header        Cookie $http_cookie;
+}
+
+# ── codenanny (public, gated) ─────────────────────────────────────────
+location /codenanny/ {
+    auth_request     /auth/_codenanny_check;
+    error_page 401 = @codenanny_unauth;
+
+    # Strip the /codenanny prefix before forwarding — codenanny serves
+    # at root path.
+    rewrite ^/codenanny/(.*)$ /$1 break;
+    rewrite ^/codenanny$ / break;
+
+    proxy_pass         http://127.0.0.1:7700;
+    proxy_http_version 1.1;
+    proxy_set_header   Host              $host;
+    proxy_set_header   X-Real-IP         $remote_addr;
+    proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   X-Forwarded-Prefix /codenanny;
+
+    # SSE (codenanny pushes live UI updates over Server-Sent Events).
+    # Without these, the EventSource connection buffers and the UI
+    # stops updating in real time.
+    proxy_buffering    off;
+    proxy_cache        off;
+    proxy_read_timeout 1h;
+    proxy_set_header   Connection "";
+}
+
+# Where to send anonymous visitors. Usually your dashboard's login page.
+location @codenanny_unauth {
+    return 302 {{LOGIN_REDIRECT_URL}};
+}
+
+# ── placeholder reference ─────────────────────────────────────────────
+# {{AUTH_BACKEND_PORT}}    port of the service that exposes /auth/check
+# {{LOGIN_REDIRECT_URL}}   where unauth users land, e.g. https://your.host/
