@@ -1,0 +1,65 @@
+name: Feature request
+description: Suggest a new feature or improvement
+title: "[feat] "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem first, then your idea for a solution. Knowing the *problem* helps us find better solutions together.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: The use case, the pain point, the gap.
+      placeholder: I have thousands of Claude Code sessions and want to filter them by date range...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Your idea for how to solve it. It's fine if you don't have a fully-formed proposal.
+      placeholder: Add a date range picker above the sessions list...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you thought about and why you rejected them.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Which package is this for?
+      options:
+        - codenanny (core)
+        - plugkit
+        - "@codenanny/ui"
+        - "@codenanny/wizard"
+        - "@codenanny/adapters"
+        - "@codenanny/cli"
+        - new package / not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you interested in contributing?
+      options:
+        - label: I'd be willing to open a PR for this
+        - label: I'd like help / guidance to open a PR
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](../CODE_OF_CONDUCT.md)
+          required: true

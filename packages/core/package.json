@@ -1,0 +1,44 @@
+{
+  "name": "codenanny",
+  "version": "0.1.0",
+  "description": "Turn AI-generated project sprawl into a searchable, contextualized library. Ingests Claude Code transcripts; serves them as a navigable web UI or exports as a static bundle.",
+  "license": "MIT",
+  "author": "desertshibari-crypto",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "src/",
+    "README.md"
+  ],
+  "keywords": [
+    "claude-code",
+    "anthropic",
+    "ai-coding",
+    "session-viewer",
+    "transcripts",
+    "sqlite",
+    "search",
+    "fts5",
+    "plugkit"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "plugkit": "^0.1.0",
+    "express": "^4.19.0",
+    "better-sqlite3": "^11.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/desertshibari-crypto/codenanny.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

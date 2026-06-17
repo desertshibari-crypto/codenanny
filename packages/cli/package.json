@@ -1,0 +1,29 @@
+{
+  "name": "@codenanny/cli",
+  "version": "0.1.0",
+  "description": "Command-line entry for codenanny: wizard, serve, ingest, export.",
+  "license": "MIT",
+  "author": "desertshibari-crypto",
+  "type": "module",
+  "main": "./src/cli.js",
+  "bin": {
+    "codenanny": "./bin/codenanny.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "codenanny": "^0.1.0",
+    "plugkit": "^0.1.0",
+    "@codenanny/ui": "^0.1.0",
+    "@codenanny/wizard": "^0.1.0",
+    "@codenanny/adapters": "^0.1.0",
+    "express": "^4.19.0",
+    "better-sqlite3": "^11.0.0"
+  }
+}

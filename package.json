@@ -1,0 +1,29 @@
+{
+  "name": "codenanny-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "codenanny + plugkit — turn AI-generated project sprawl into a searchable, contextualized library.",
+  "license": "MIT",
+  "author": "desertshibari-crypto",
+  "homepage": "https://github.com/desertshibari-crypto/codenanny",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/desertshibari-crypto/codenanny.git"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "start": "node packages/cli/bin/codenanny.js",
+    "wizard": "node packages/cli/bin/codenanny.js wizard",
+    "ingest": "node packages/cli/bin/codenanny.js ingest",
+    "serve": "node packages/cli/bin/codenanny.js serve",
+    "export": "node packages/cli/bin/codenanny.js export",
+    "test": "echo \"TODO: tests\" && exit 0",
+    "lint": "echo \"TODO: lint\" && exit 0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

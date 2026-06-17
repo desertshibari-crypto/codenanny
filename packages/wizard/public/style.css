@@ -1,0 +1,65 @@
+* { box-sizing: border-box; }
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  background: #0e1116;
+  color: #e6e6e6;
+  min-height: 100vh;
+}
+header {
+  padding: 32px 24px;
+  text-align: center;
+  border-bottom: 1px solid #21262d;
+}
+header h1 { margin: 0; font-size: 28px; font-weight: 600; }
+header .subtitle { margin: 6px 0 0; color: #8b949e; font-style: italic; }
+main { max-width: 640px; margin: 32px auto; padding: 0 24px; }
+.card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 24px;
+}
+.card h2 { margin-top: 0; font-size: 20px; font-weight: 600; }
+.hint { color: #8b949e; font-size: 14px; }
+.field { margin: 14px 0; }
+.field > label { display: block; margin-bottom: 4px; }
+.field input[type=text], .field input[type=password], .field select {
+  width: 100%;
+  padding: 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6e6e6;
+  font-size: 14px;
+}
+.field .radio {
+  display: block;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.field .radio:hover { background: #1c2128; }
+.btn {
+  padding: 10px 16px;
+  border: 1px solid #30363d;
+  background: #21262d;
+  color: #e6e6e6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn.primary { background: #1f6feb; border-color: #1f6feb; }
+.btn.primary:hover { background: #388bfd; }
+.btn:hover { background: #30363d; }
+.nav { display: flex; gap: 10px; margin-top: 20px; }
+.progress { margin-top: 16px; font-size: 12px; color: #6e7681; }
+pre {
+  background: #0d1117;
+  padding: 12px;
+  border-radius: 6px;
+  overflow: auto;
+  font-size: 12px;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "codenanny-standalone-example",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Minimal example: codenanny + plugkit running as a single Express server with the UI mounted at /.",
+  "type": "module",
+  "main": "./index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "plugkit": "^0.1.0",
+    "codenanny": "^0.1.0",
+    "@codenanny/ui": "^0.1.0",
+    "express": "^4.19.0",
+    "better-sqlite3": "^11.0.0"
+  }
+}

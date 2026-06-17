@@ -1,0 +1,20 @@
+{
+  "name": "@codenanny/adapters",
+  "version": "0.1.0",
+  "description": "Delivery adapters for codenanny static exports (local/gdrive/ftp/scp).",
+  "license": "MIT",
+  "author": "desertshibari-crypto",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "src/",
+    "README.md"
+  ],
+  "dependencies": {
+    "ssh2-sftp-client": "^11.0.0"
+  }
+}
