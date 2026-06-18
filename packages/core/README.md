@@ -82,4 +82,4 @@ const bundle = resumeBundle(api, sessionId, { turns: 6, maxTurnChars: 4000 });
 
 ## License
 
-MIT. Created by [desertshibari-crypto](https://github.com/desertshibari-crypto).
+MIT. Created by [nobleglitch](https://github.com/nobleglitch).

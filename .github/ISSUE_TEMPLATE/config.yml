@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question or general discussion
-    url: https://github.com/desertshibari-crypto/codenanny/discussions
+    url: https://github.com/nobleglitch/codenanny/discussions
     about: Ask questions, share use cases, or propose larger changes before opening an issue
   - name: Security report
-    url: https://github.com/desertshibari-crypto/codenanny/security/advisories/new
+    url: https://github.com/nobleglitch/codenanny/security/advisories/new
     about: Privately report a security vulnerability (do not open a public issue)

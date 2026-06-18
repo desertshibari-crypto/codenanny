@@ -26,7 +26,7 @@ This code of conduct applies in all project spaces — GitHub issues, pull reque
 
 ## Enforcement
 
-Report unacceptable behavior to the maintainer at the email address in the maintainer's GitHub profile (`desertshibari-crypto`). All reports will be reviewed and investigated promptly and fairly.
+Report unacceptable behavior to the maintainer at the email address in the maintainer's GitHub profile (`nobleglitch`). All reports will be reviewed and investigated promptly and fairly.
 
 The maintainer is responsible for clarifying the standards of acceptable behavior and is expected to take appropriate, fair corrective action in response to behavior they deem inappropriate, threatening, offensive, or harmful.
 

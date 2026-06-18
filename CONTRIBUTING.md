@@ -38,7 +38,7 @@ For big changes (new modules, architecture shifts) — open a discussion *first*
 Prereqs: Node 20+, npm 10+, git.
 
 ```bash
-git clone https://github.com/desertshibari-crypto/codenanny.git
+git clone https://github.com/nobleglitch/codenanny.git
 cd codenanny
 npm install
 # Run the wizard against your own Claude Code transcripts
@@ -105,6 +105,6 @@ By contributing, you agree your contributions will be licensed under the [MIT Li
 
 ## Where to ask questions
 
-- General discussion → [GitHub Discussions](https://github.com/desertshibari-crypto/codenanny/discussions)
-- Bug or feature → [GitHub Issues](https://github.com/desertshibari-crypto/codenanny/issues)
+- General discussion → [GitHub Discussions](https://github.com/nobleglitch/codenanny/discussions)
+- Bug or feature → [GitHub Issues](https://github.com/nobleglitch/codenanny/issues)
 - Security report → [SECURITY.md](SECURITY.md)

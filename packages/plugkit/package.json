@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Tiny plugin contract for modular Express apps. Mount routers, share events, declare sqlite schemas, contribute to nav. Used by codenanny.",
   "license": "MIT",
-  "author": "desertshibari-crypto",
+  "author": "nobleglitch",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -25,11 +25,11 @@
   "engines": {
     "node": ">=20"
   },
-  "homepage": "https://github.com/desertshibari-crypto/codenanny/tree/main/packages/plugkit#readme",
-  "bugs": "https://github.com/desertshibari-crypto/codenanny/issues",
+  "homepage": "https://github.com/nobleglitch/codenanny/tree/main/packages/plugkit#readme",
+  "bugs": "https://github.com/nobleglitch/codenanny/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/desertshibari-crypto/codenanny.git",
+    "url": "git+https://github.com/nobleglitch/codenanny.git",
     "directory": "packages/plugkit"
   },
   "publishConfig": {

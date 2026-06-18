@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Delivery adapters for codenanny static exports (local/gdrive/ftp/scp).",
   "license": "MIT",
-  "author": "desertshibari-crypto",
+  "author": "nobleglitch",
   "type": "module",
   "main": "./index.js",
   "exports": {

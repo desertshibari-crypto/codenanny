@@ -3,7 +3,7 @@
 > Find which Claude Code session built that abandoned folder. Resume disconnected sessions with one paste. Local, MIT, no cloud.
 
 [![npm](https://img.shields.io/npm/v/codenanny.svg)](https://www.npmjs.com/package/codenanny)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/desertshibari-crypto/codenanny/blob/main/LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nobleglitch/codenanny/blob/main/LICENSE)
 
 Codenanny watches your local Claude Code transcripts and turns them into a navigable index of every session — every prompt, every file Claude wrote, edited, or read, and every file-creating Bash command (`cat>`, `tee`, `mkdir`, etc.) — so you can:
 
@@ -72,9 +72,9 @@ codenanny resume <id> --turns 10 --json
 
 ## Links
 
-- Source + issues: https://github.com/desertshibari-crypto/codenanny
+- Source + issues: https://github.com/nobleglitch/codenanny
 - Core library (for plugkit hosts): [`@codenanny/core`](https://www.npmjs.com/package/@codenanny/core)
 
 ## License
 
-MIT. Created by [desertshibari-crypto](https://github.com/desertshibari-crypto).
+MIT. Created by [nobleglitch](https://github.com/nobleglitch).

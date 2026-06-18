@@ -11,7 +11,7 @@ Please **do not** open a public GitHub issue for security reports.
 Use one of:
 
 1. **GitHub private vulnerability reporting** — go to the repo → Security tab → "Report a vulnerability".
-2. **Email** — send to the address listed on the maintainer's GitHub profile (`desertshibari-crypto`). Use a clear subject line like `[codenanny] security report`.
+2. **Email** — send to the address listed on the maintainer's GitHub profile (`nobleglitch`). Use a clear subject line like `[codenanny] security report`.
 
 Please include:
 

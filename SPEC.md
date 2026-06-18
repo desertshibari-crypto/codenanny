@@ -94,7 +94,7 @@ Non-binding phases are documented so v1 architecture doesn't paint us into a cor
 ## OSS Branding (locked)
 
 - Packages: `plugkit`, `codenanny`. No Noble branding visible.
-- Maintainer: `desertshibari-crypto` on GitHub.
+- Maintainer: `nobleglitch` on GitHub.
 - License: MIT.
 - README posture: "give-back to the community" — short, clear, no shameless plugs.
 

@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Local index of every Claude Code session: searchable timeline, paste-ready resume bundles for disconnects, and a disk reconciler that answers \"which session built this folder?\". MIT, runs locally, no cloud.",
   "license": "MIT",
-  "author": "desertshibari-crypto",
+  "author": "nobleglitch",
   "type": "module",
   "main": "./src/cli.js",
   "bin": {
@@ -28,11 +28,11 @@
     "developer-tools",
     "cli"
   ],
-  "homepage": "https://github.com/desertshibari-crypto/codenanny#readme",
-  "bugs": "https://github.com/desertshibari-crypto/codenanny/issues",
+  "homepage": "https://github.com/nobleglitch/codenanny#readme",
+  "bugs": "https://github.com/nobleglitch/codenanny/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/desertshibari-crypto/codenanny.git",
+    "url": "git+https://github.com/nobleglitch/codenanny.git",
     "directory": "packages/cli"
   },
   "publishConfig": {

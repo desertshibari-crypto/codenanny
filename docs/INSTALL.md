@@ -15,7 +15,7 @@ That's it. No build step, no postgres, no docker.
 ## Install from source
 
 ```bash
-git clone https://github.com/desertshibari-crypto/codenanny.git
+git clone https://github.com/nobleglitch/codenanny.git
 cd codenanny
 npm install
 ```

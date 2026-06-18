@@ -4,11 +4,11 @@
   "private": true,
   "description": "codenanny + plugkit — turn AI-generated project sprawl into a searchable, contextualized library.",
   "license": "MIT",
-  "author": "desertshibari-crypto",
-  "homepage": "https://github.com/desertshibari-crypto/codenanny",
+  "author": "nobleglitch",
+  "homepage": "https://github.com/nobleglitch/codenanny",
   "repository": {
     "type": "git",
-    "url": "https://github.com/desertshibari-crypto/codenanny.git"
+    "url": "https://github.com/nobleglitch/codenanny.git"
   },
   "workspaces": [
     "packages/*",

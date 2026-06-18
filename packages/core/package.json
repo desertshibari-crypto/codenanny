@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Core library for codenanny: sqlite + FTS5 ingest of Claude Code transcripts, narrative timeline API, resume-bundle generator, disk reconciler. End users want the `codenanny` CLI package instead.",
   "license": "MIT",
-  "author": "desertshibari-crypto",
+  "author": "nobleglitch",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -34,11 +34,11 @@
     "better-sqlite3": "^12.11.1",
     "chokidar": "^3.6.0"
   },
-  "homepage": "https://github.com/desertshibari-crypto/codenanny#readme",
-  "bugs": "https://github.com/desertshibari-crypto/codenanny/issues",
+  "homepage": "https://github.com/nobleglitch/codenanny#readme",
+  "bugs": "https://github.com/nobleglitch/codenanny/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/desertshibari-crypto/codenanny.git",
+    "url": "git+https://github.com/nobleglitch/codenanny.git",
     "directory": "packages/core"
   },
   "publishConfig": {

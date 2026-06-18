@@ -1,6 +1,6 @@
 # codenanny
 
-[![ci](https://github.com/desertshibari-crypto/codenanny/actions/workflows/ci.yml/badge.svg)](https://github.com/desertshibari-crypto/codenanny/actions/workflows/ci.yml)
+[![ci](https://github.com/nobleglitch/codenanny/actions/workflows/ci.yml/badge.svg)](https://github.com/nobleglitch/codenanny/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -28,7 +28,7 @@ The HTML wizard walks you through setup either way.
 ## Quickstart
 
 ```bash
-git clone https://github.com/desertshibari-crypto/codenanny.git
+git clone https://github.com/nobleglitch/codenanny.git
 cd codenanny
 npm install
 npm run wizard
@@ -75,7 +75,7 @@ Issues, ideas, and PRs are welcome. Start here:
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to set up a dev environment and submit a PR
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — what we expect from each other
 - [SECURITY.md](SECURITY.md) — how to report a security issue
-- [GitHub Discussions](https://github.com/desertshibari-crypto/codenanny/discussions) — questions, use cases, larger proposals
+- [GitHub Discussions](https://github.com/nobleglitch/codenanny/discussions) — questions, use cases, larger proposals
 
 Good first issues are labeled `good first issue` once they exist.
 
@@ -89,4 +89,4 @@ Folders of half-finished AI-generated projects are not a knowledge base. The pro
 
 ## License
 
-[MIT](LICENSE). Created by [desertshibari-crypto](https://github.com/desertshibari-crypto).
+[MIT](LICENSE). Created by [nobleglitch](https://github.com/nobleglitch).

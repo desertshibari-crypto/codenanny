@@ -9,7 +9,7 @@
 - Event bus subscriptions + emissions (shared across modules)
 - Nav contribution (the host renders the combined nav)
 
-It's the substrate that **[codenanny](https://github.com/desertshibari-crypto/codenanny)** is built on. But it's not codenanny-specific — use it for any modular Node app where you want clean module boundaries.
+It's the substrate that **[codenanny](https://github.com/nobleglitch/codenanny)** is built on. But it's not codenanny-specific — use it for any modular Node app where you want clean module boundaries.
 
 ## Install
 
@@ -94,4 +94,4 @@ If you outgrow plugkit, you can replace it with anything that respects the same 
 
 ## License
 
-MIT. Created by [desertshibari-crypto](https://github.com/desertshibari-crypto).
+MIT. Created by [nobleglitch](https://github.com/nobleglitch).
